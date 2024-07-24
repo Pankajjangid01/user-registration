@@ -127,11 +127,19 @@
               window.location.href = "display.html";
             },
             error: function (error) {
-              const errors = error.responseJSON.errors;
+              console.log("Error response:", error);
               let errorMessage = "Error saving user:\n";
-              for (const field in errors) {
-                errorMessage += `${field}: ${errors[field]}\n`;
+
+              // Safely check for the error response structure
+              if (error.responseJSON && error.responseJSON.errors) {
+                const errors = error.responseJSON.errors;
+                for (const field in errors) {
+                  errorMessage += `${field}: ${errors[field]}\n`;
+                }
+              } else {
+                errorMessage += "An unknown error occurred.";
               }
+
               alert(errorMessage);
             },
           });
