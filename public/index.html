@@ -5,20 +5,95 @@
     <title>User Registration</title>
     <link rel="stylesheet" href="index.css" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <form id="userForm">
+    <form id="userForm" autocomplete="off">
+      <!-- Hidden fields -->
+      <input
+        type="text"
+        name="hiddenField1"
+        style="display: none"
+        autocomplete="off"
+      />
+      <input
+        type="text"
+        name="hiddenField2"
+        style="display: none"
+        autocomplete="off"
+      />
+
       <h2>Add User</h2>
-      <input type="text" name="firstName" placeholder="First Name" required />
-      <input type="text" name="lastName" placeholder="Last Name" required />
-      <input type="text" name="mobileNo" placeholder="Mobile No" required />
-      <input type="email" name="emailId" placeholder="Email" required />
-      <input type="text" name="street" placeholder="Street" required />
-      <input type="text" name="city" placeholder="City" required />
-      <input type="text" name="state" placeholder="State" required />
-      <input type="text" name="country" placeholder="Country" required />
-      <input type="text" name="loginId" placeholder="Login ID" required />
-      <input type="password" name="password" placeholder="Password" required />
+      <input
+        type="text"
+        name="firstName"
+        placeholder="First Name"
+        required
+        autocomplete="nope"
+      />
+      <input
+        type="text"
+        name="lastName"
+        placeholder="Last Name"
+        required
+        autocomplete="nope"
+      />
+      <input
+        type="text"
+        name="mobileNo"
+        placeholder="Mobile No"
+        required
+        autocomplete="nope"
+      />
+      <input
+        type="email"
+        name="emailId"
+        placeholder="Email"
+        required
+        autocomplete="nope"
+      />
+      <input
+        type="text"
+        name="street"
+        placeholder="Street"
+        required
+        autocomplete="nope"
+      />
+      <input
+        type="text"
+        name="city"
+        placeholder="City"
+        required
+        autocomplete="nope"
+      />
+      <input
+        type="text"
+        name="state"
+        placeholder="State"
+        required
+        autocomplete="nope"
+      />
+      <input
+        type="text"
+        name="country"
+        placeholder="Country"
+        required
+        autocomplete="nope"
+      />
+      <input
+        type="text"
+        name="loginId"
+        placeholder="Login ID"
+        required
+        autocomplete="nope"
+      />
+      <input
+        type="password"
+        name="password"
+        placeholder="Password"
+        required
+        autocomplete="new-password"
+      />
       <button type="submit">Save</button>
     </form>
 
@@ -52,15 +127,12 @@
               window.location.href = "display.html";
             },
             error: function (error) {
-              if (error.status === 400) {
-                const errors = error.responseJSON.errors;
-                errors.forEach((err) => {
-                  alert(`${err.field}: ${err.message}`);
-                });
-              } else {
-                alert("Error saving user");
-                console.log(error.responseJSON);
+              const errors = error.responseJSON.errors;
+              let errorMessage = "Error saving user:\n";
+              for (const field in errors) {
+                errorMessage += `${field}: ${errors[field]}\n`;
               }
+              alert(errorMessage);
             },
           });
         });

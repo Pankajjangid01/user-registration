@@ -11,25 +11,27 @@ const app = express();
 connectDB();
 
 app.use(bodyParser.json());
+
 app.use(express.static(path.join(__dirname, "public")));
 
 app.post("/api/users", async (req, res) => {
   try {
     const user = new User(req.body);
+    await user.validate();
     await user.save();
     res.status(201).send(user);
   } catch (error) {
-    if (error.name === "ValidationError") {
-      const errors = Object.keys(error.errors).map((field) => ({
-        field,
-        message: error.errors[field].message,
-      }));
-      res.status(400).json({ message: "Error saving user", errors });
+    const errorMessages = {};
+    if (error.errors) {
+      for (const key in error.errors) {
+        errorMessages[key] = error.errors[key].message;
+      }
     } else {
-      res
-        .status(400)
-        .send({ message: "Error saving user", error: error.message });
+      errorMessages.general = error.message;
     }
+    res
+      .status(400)
+      .send({ message: "Error saving user", errors: errorMessages });
   }
 });
 
