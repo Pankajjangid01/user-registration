@@ -16,6 +16,7 @@ html {
 }
 
 #tableContainer {
+  max-width: max-content;
   width: 80%;
   margin-top: 50px;
   padding: 20px;
