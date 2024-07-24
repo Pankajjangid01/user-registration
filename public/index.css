@@ -16,7 +16,7 @@ html {
 }
 
 #userForm {
-  width: 400px;
+  width: max-content;
   padding: 20px;
   background-color: #022b32;
   border: 2px solid #37484d;
