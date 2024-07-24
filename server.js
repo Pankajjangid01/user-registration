@@ -4,12 +4,17 @@ const path = require("path");
 const connectDB = require("./config");
 const User = require("./model");
 require("dotenv").config();
+const cors = require("cors");
 
 const app = express();
 
 // Connect to the database
 connectDB();
-
+app.use(
+  cors({
+    origin: "https://your-deployed-frontend-domain.com",
+  })
+);
 app.use(bodyParser.json());
 
 app.use(express.static(path.join(__dirname, "public")));
