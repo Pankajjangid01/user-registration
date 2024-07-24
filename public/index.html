@@ -126,17 +126,20 @@
               alert("User saved successfully");
               window.location.href = "display.html";
             },
-            error: function (error) {
-              console.log("Error response:", error);
+            error: function (xhr) {
+              console.log("Error response:", xhr.responseText);
               let errorMessage = "Error saving user:\n";
 
-              // Safely check for the error response structure
-              if (error.responseJSON && error.responseJSON.errors) {
-                const errors = error.responseJSON.errors;
-                for (const field in errors) {
-                  errorMessage += `${field}: ${errors[field]}\n`;
+              try {
+                const response = JSON.parse(xhr.responseText);
+                if (response.errors) {
+                  for (const field in response.errors) {
+                    errorMessage += `${field}: ${response.errors[field]}\n`;
+                  }
+                } else {
+                  errorMessage += "An unknown error occurred.";
                 }
-              } else {
+              } catch (e) {
                 errorMessage += "An unknown error occurred.";
               }
 
