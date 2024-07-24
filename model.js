@@ -37,7 +37,7 @@ const userSchema = new mongoose.Schema({
       validate: {
         validator: isValidStreet,
         message:
-          "Street can only contain alphanumeric characters, spaces, commas, periods, and hyphens",
+          "Street must contain at least one alphabetic character or special character and can include numbers, spaces, commas, periods, and hyphens",
       },
     },
     city: {
