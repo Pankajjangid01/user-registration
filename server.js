@@ -12,7 +12,7 @@ const app = express();
 connectDB();
 app.use(
   cors({
-    origin: "https://your-deployed-frontend-domain.com",
+    origin: "https://user-registration-enzu.onrender.com",
   })
 );
 app.use(bodyParser.json());
