@@ -5,7 +5,6 @@
     <title>User Registration</title>
     <link rel="stylesheet" href="index.css" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <form id="userForm">
@@ -43,8 +42,6 @@
             password: $('input[name="password"]').val(),
           };
 
-          console.log(formData);
-
           $.ajax({
             type: "POST",
             url: "http://localhost:4000/api/users",
@@ -55,8 +52,15 @@
               window.location.href = "display.html";
             },
             error: function (error) {
-              alert("Error saving user");
-              console.log(error.responseJSON);
+              if (error.status === 400) {
+                const errors = error.responseJSON.errors;
+                errors.forEach((err) => {
+                  alert(`${err.field}: ${err.message}`);
+                });
+              } else {
+                alert("Error saving user");
+                console.log(error.responseJSON);
+              }
             },
           });
         });

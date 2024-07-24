@@ -11,7 +11,6 @@ const app = express();
 connectDB();
 
 app.use(bodyParser.json());
-
 app.use(express.static(path.join(__dirname, "public")));
 
 app.post("/api/users", async (req, res) => {
@@ -20,9 +19,17 @@ app.post("/api/users", async (req, res) => {
     await user.save();
     res.status(201).send(user);
   } catch (error) {
-    res
-      .status(400)
-      .send({ message: "Error saving user", error: error.message });
+    if (error.name === "ValidationError") {
+      const errors = Object.keys(error.errors).map((field) => ({
+        field,
+        message: error.errors[field].message,
+      }));
+      res.status(400).json({ message: "Error saving user", errors });
+    } else {
+      res
+        .status(400)
+        .send({ message: "Error saving user", error: error.message });
+    }
   }
 });
 
