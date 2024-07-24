@@ -3,6 +3,9 @@ const mongoose = require("mongoose");
 const isAlphaWithSpaces = (value) => /^[a-zA-Z\s]+$/.test(value);
 const isValidStreet = (value) =>
   /^[a-zA-Z0-9\s.,-]+$/.test(value) && /[a-zA-Z]/.test(value);
+const isValidMobileNo = (value) => {
+  return /^[1-9][0-9]{9}$/.test(value);
+};
 const userSchema = new mongoose.Schema({
   firstName: {
     type: String,
@@ -23,7 +26,11 @@ const userSchema = new mongoose.Schema({
   mobileNo: {
     type: String,
     required: [true, "Mobile number is required"],
-    match: [/^[0-9]{10}$/, "Mobile number must be 10 digits"],
+    validate: {
+      validator: isValidMobileNo,
+      message:
+        "Mobile number must be 10 digits, not start with 0, and not be all zeros",
+    },
   },
   emailId: {
     type: String,
