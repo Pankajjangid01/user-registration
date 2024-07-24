@@ -27,7 +27,7 @@
       $(document).ready(function () {
         $.ajax({
           type: "GET",
-          url: "http://localhost:4000/api/users",
+          url: "https://user-registration-enzu.onrender.com/api/users",
           success: function (response) {
             const usersTableBody = $("#usersTableBody");
             response.forEach((user) => {
