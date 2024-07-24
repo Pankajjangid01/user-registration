@@ -11,12 +11,10 @@ const userSchema = new mongoose.Schema({
     state: { type: String, required: true },
     country: { type: String, required: true },
   },
-  loginId: { type: String, required: true, match: /^[a-zA-Z0-9]{8,}$/ },
+  loginId: { type: String, required: true },
   password: {
     type: String,
     required: true,
-    match:
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
   },
   creationTime: { type: Date, default: Date.now },
   lastUpdatedOn: { type: Date, default: Date.now },
