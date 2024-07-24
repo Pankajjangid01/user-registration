@@ -1,8 +1,24 @@
 const mongoose = require("mongoose");
 
+const isAlphaWithSpaces = (value) => /^[a-zA-Z\s]+$/.test(value);
+const isValidStreet = (value) => /^[a-zA-Z0-9\s.,-]+$/.test(value);
 const userSchema = new mongoose.Schema({
-  firstName: { type: String, required: [true, "First name is required"] },
-  lastName: { type: String, required: [true, "Last name is required"] },
+  firstName: {
+    type: String,
+    required: [true, "First name is required"],
+    validate: {
+      validator: isAlphaWithSpaces,
+      message: "First name can only contain alphabetic characters",
+    },
+  },
+  lastName: {
+    type: String,
+    required: [true, "Last name is required"],
+    validate: {
+      validator: isAlphaWithSpaces,
+      message: "Last name can only contain alphabetic characters and spaces",
+    },
+  },
   mobileNo: {
     type: String,
     required: [true, "Mobile number is required"],
@@ -14,15 +30,47 @@ const userSchema = new mongoose.Schema({
     match: [/\S+@\S+\.\S+/, "Email format is invalid"],
   },
   address: {
-    street: { type: String, required: [true, "Street is required"] },
-    city: { type: String, required: [true, "City is required"] },
-    state: { type: String, required: [true, "State is required"] },
-    country: { type: String, required: [true, "Country is required"] },
+    street: {
+      type: String,
+      required: [true, "Street is required"],
+      validate: {
+        validator: isValidStreet,
+        message:
+          "Street can only contain alphanumeric characters, spaces, commas, periods, and hyphens",
+      },
+    },
+    city: {
+      type: String,
+      required: [true, "City is required"],
+      validate: {
+        validator: isAlphaWithSpaces,
+        message: "City can only contain alphabetic characters and spaces",
+      },
+    },
+    state: {
+      type: String,
+      required: [true, "State is required"],
+      validate: {
+        validator: isAlphaWithSpaces,
+        message: "State can only contain alphabetic characters and spaces",
+      },
+    },
+    country: {
+      type: String,
+      required: [true, "Country is required"],
+      validate: {
+        validator: isAlphaWithSpaces,
+        message: "Country can only contain alphabetic characters and spaces",
+      },
+    },
   },
   loginId: {
     type: String,
     required: [true, "Login ID is required"],
-    match: [/^[a-zA-Z0-9]{8,}$/, "Login ID must be at least 8 characters"],
+    match: [
+      /^[a-zA-Z0-9]{8}$/,
+      "Login ID must be exactly 8 alphanumeric characters",
+    ],
   },
   password: {
     type: String,
