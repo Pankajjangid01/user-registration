@@ -69,7 +69,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, "Login ID is required"],
     match: [
-      /^[a-zA-Z0-9]{8}$/,
+      /^[a-zA-Z0-9]{8}$/ && /[a-zA-Z]/,
       "Login ID must be exactly 8 alphanumeric characters",
     ],
   },
